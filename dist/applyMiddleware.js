@@ -9,7 +9,7 @@ var _error = require('./messages/error');
 function applyMiddleware(app, drawer, middleware) {
 	if (middleware.constructor === Array) {
 		var _loop = function _loop(i) {
-			server.use(function (req, res, next) {
+			app.use(function (req, res, next) {
 				middleware[i](drawer, req, res, next);
 			});
 		};
