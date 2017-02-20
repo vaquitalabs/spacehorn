@@ -25,11 +25,7 @@ function router(app, exoDrawer, routes) {
 
 			app[method](path, function (req, res) {
 				var params = _extends({}, req.params, req.body, req.query);
-
 				drawer.params = params;
-				drawer.render = res.render;
-				drawer.send = res.send;
-				drawer.sendJson = res.json;
 
 				exec(drawer, req, res);
 			});

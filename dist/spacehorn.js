@@ -5,8 +5,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    */
 
 
-// import { error, warn, info } from './messages'
-
 var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
