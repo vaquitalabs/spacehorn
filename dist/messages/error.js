@@ -21,6 +21,12 @@ var errorMessages = {
 	ROUTES_IS_NOT_ARRAY: function ROUTES_IS_NOT_ARRAY(appName, type) {
 		return c('The routes for ' + appName + ' must be passed as an Array, got ' + type + ' instead');
 	},
+	ROUTE_MISSING_PATH: function ROUTE_MISSING_PATH(appName) {
+		return c('There is a route for ' + appName + ' that is missing the required "path"');
+	},
+	ROUTE_MISSING_EXEC: function ROUTE_MISSING_EXEC(appName) {
+		return c('There is a route for ' + appName + ' that is missing the required "exec" function');
+	},
 	NO_ROUTES: function NO_ROUTES(appName) {
 		return c('Forgot to add routes? At least one route is needed for ' + appName);
 	},
