@@ -10,7 +10,7 @@ function applyMiddleware(app, drawer, middleware) {
 	if (middleware.constructor === Array) {
 		var _loop = function _loop(i) {
 			var mddw = middleware[i];
-			var mddwFunc = mddw.constructor === Array ? mddw.run : mddw;
+			var mddwFunc = mddw.constructor === Object ? mddw.run : mddw;
 			var mddwArgs = mddwFunc.toString().split('{')[0].match(/\(([^)]*)\)/)[1].split(',');
 			var mddwReady = mddwFunc;
 			var mddwHasDrawer = mddwArgs.length > 3;
@@ -21,7 +21,7 @@ function applyMiddleware(app, drawer, middleware) {
 				};
 			}
 
-			if (mddw.constructor === Array) {
+			if (mddw.constructor === Object) {
 				app.use(mddw.path, mddwReady);
 			} else {
 				app.use(mddwReady);
