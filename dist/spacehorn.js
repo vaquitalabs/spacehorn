@@ -43,7 +43,8 @@ function Spacehorn(config) {
 	    routes = config.routes,
 	    viewsDir = config.viewsDir,
 	    viewsEngine = config.viewsEngine,
-	    extendDrawer = config.extendDrawer;
+	    extendDrawer = config.extendDrawer,
+	    onReady = config.onReady;
 	var name = config.name,
 	    port = config.port,
 	    logger = config.logger,
@@ -70,7 +71,7 @@ function Spacehorn(config) {
 	/* ==============================
  *	DEFINE initial drawer
  ============================== */
-	var exoDrawer = { http: _axios2.default };
+	var exoDrawer = { http: _axios2.default, logger: logger };
 
 	if (db) exoDrawer.db = db;
 
@@ -136,6 +137,15 @@ function Spacehorn(config) {
 		server.listen(port, function () {
 			logger.log((0, _info.APP_RUNNING)(name, port));
 		});
+
+		if (onReady) {
+			if (onReady.constructor === Function) {
+				onReady(exoDrawer);
+			} else {
+				executionError = true;
+				return logger.error((0, _error.READY_HOOK_NOT_FUNCTION)(name, onReady.constructor.name));
+			}
+		}
 	};
 }
 
