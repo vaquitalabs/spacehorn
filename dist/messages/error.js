@@ -32,6 +32,9 @@ var errorMessages = {
 	},
 	EXTEND_DRAWER_NOT_OBJECT: function EXTEND_DRAWER_NOT_OBJECT(appName, type) {
 		return c('"extendDrawer" passed to ' + appName + ' must be a key-value Object, got ' + type + ' instead');
+	},
+	READY_HOOK_NOT_FUNCTION: function READY_HOOK_NOT_FUNCTION(appName, type) {
+		return c('"onReady" passed to ' + appName + ' must be a Function, got ' + type + ' instead');
 	}
 };
 
