@@ -25,7 +25,7 @@ function manageViews(app, viewsDir, viewsEngine) {
 				throw new Error((0, _error.INCOMPLETE_TEMPLATE_ENGINE)(app.appName));
 			} else {
 				app.engine(ext, engineFunc);
-				app.set('view engine', viewsEngine);
+				app.set('view engine', ext);
 			}
 		}
 	}
