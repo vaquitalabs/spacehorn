@@ -41,7 +41,11 @@ describe('applyMiddleware', () => {
       () => {},
       {
         path: '/any',
-        run: () => {},
+        run: (req, res, next) => {},
+      },
+      {
+        path: '/any',
+        run: (drawer, req, res, next) => {},
       },
     ]
 

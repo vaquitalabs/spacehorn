@@ -8,7 +8,7 @@
     "build:watch": "babel -w lib -d dist",
     "lint": "eslint .",
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "raw-test": "jest"
+    "test:raw": "jest"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,7 @@
     "coveralls": "^2.13.1",
     "eslint": "3.19.0",
     "eslint-plugin-import": "2.2.0",
-    "jest": "18.1.0"
+    "jest": "19.0.2"
   },
   "jest": {
     "coveragePathIgnorePatterns": [

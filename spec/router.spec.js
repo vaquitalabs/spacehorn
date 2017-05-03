@@ -56,4 +56,21 @@ describe('router', () => {
     router(app, exoDrawer, routes)
     expect(app.post).toHaveBeenCalled()
   })
+
+  test('app[method] should execute the "exec" route method', () => {
+    const routes = [
+      {
+        method: 'post',
+        path: '/path',
+        exec: jest.fn(),
+      },
+    ]
+    app.post = (path, callback) => {
+      const req = {}
+      const res = {}
+      callback(req, res)
+    }
+    router(app, exoDrawer, routes)
+    expect(routes[0].exec).toHaveBeenCalled()
+  })
 })

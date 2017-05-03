@@ -3,6 +3,9 @@ import exoServer from './../lib/server'
 
 const appConfig = {
   name: 'Test App',
+  publicDir: '/public',
+  viewsDir: '/views',
+  viewsEngine: 'pug',
 }
 
 describe('server', () => {
