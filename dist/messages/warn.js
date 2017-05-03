@@ -9,9 +9,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var c = _chalk2.default.yellow;
 
 var warnMessages = {
-	FIX_ERRORS_FIRST: function FIX_ERRORS_FIRST(appName) {
-		return c('Errors need to be attended before ' + appName + ' starts to serve');
-	}
+  FIX_ERRORS_FIRST: function FIX_ERRORS_FIRST(appName) {
+    return c('Errors need to be attended before ' + appName + ' starts to serve');
+  }
 };
 
 module.exports = warnMessages;

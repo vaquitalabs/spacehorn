@@ -10,9 +10,9 @@ var c = _chalk2.default.green;
 var division = '----------------------------------------';
 
 var infoMessages = {
-	APP_RUNNING: function APP_RUNNING(appName, port) {
-		return c(division + '\n' + appName + ' is serving on port ' + port);
-	}
+  APP_RUNNING: function APP_RUNNING(appName, port) {
+    return c(division + '\n' + appName + ' is serving on port ' + port);
+  }
 };
 
 module.exports = infoMessages;

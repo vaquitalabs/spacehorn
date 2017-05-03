@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "no-mixed-spaces-and-tabs":"error",
+    "comma-dangle": ["error", "always-multiline"],
+    "arrow-body-style": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "linebreak-style": 0,
+    "func-names": 0,
+    "camelcase": 0
+  }
+}
