@@ -1,6 +1,8 @@
 # Spacehorn
 
 [![npm version](https://badge.fury.io/js/spacehorn.svg)](https://badge.fury.io/js/spacehorn)
+[![Build Status](https://travis-ci.org/vaquitalabs/spacehorn.svg?branch=master)](https://travis-ci.org/vaquitalabs/spacehorn)
+[![Coverage Status](https://coveralls.io/repos/github/vaquitalabs/spacehorn/badge.svg?branch=master)](https://coveralls.io/github/vaquitalabs/spacehorn?branch=master)
 
 NodeJS framework to build any website or api with total control and without limiting practices.
 
