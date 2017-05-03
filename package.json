@@ -7,7 +7,8 @@
     "build": "babel lib -d dist",
     "build:watch": "babel -w lib -d dist",
     "lint": "eslint .",
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "raw-test": "jest"
   },
   "repository": {
     "type": "git",
