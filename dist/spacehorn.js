@@ -37,6 +37,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 *  Start Spacehorn
 ============================== */
 function Spacehorn(config) {
+  var _this = this;
+
   var publicDir = config.publicDir,
       middleware = config.middleware,
       db = config.db,
@@ -51,7 +53,7 @@ function Spacehorn(config) {
       security = config.security;
 
 
-  var executionError = false;
+  this.executionError = false;
 
   /* ==============================
   *  DEFINE name
@@ -82,7 +84,7 @@ function Spacehorn(config) {
     if (extendDrawer.constructor === Object) {
       exoDrawer = _extends({}, exoDrawer, extendDrawer);
     } else {
-      executionError = true;
+      this.executionError = true;
       logger.error((0, _error.EXTEND_DRAWER_NOT_OBJECT)(name, extendDrawer.constructor.name));
     }
   }
@@ -111,7 +113,7 @@ function Spacehorn(config) {
     try {
       (0, _applyMiddleware2.default)(server, exoDrawer, middleware);
     } catch (err) {
-      executionError = true;
+      this.executionError = true;
       logger.error(err);
     }
   }
@@ -120,31 +122,59 @@ function Spacehorn(config) {
   *  ROUTES : if routes
   ============================== */
   if (!routes) {
-    executionError = true;
+    this.executionError = true;
     logger.error((0, _error.NO_ROUTES)(name));
   } else {
     try {
       (0, _router2.default)(server, exoDrawer, routes);
     } catch (err) {
-      executionError = true;
+      this.executionError = true;
       logger.error(err);
     }
   }
 
-  this.attend = function () {
-    if (executionError) return logger.warn((0, _warn.FIX_ERRORS_FIRST)(name));
+  /* ==============================
+  *  ASSIGN PROPS
+  ============================== */
+  this.name = name;
+  this.port = port;
+  this.publicDir = publicDir;
+  this.viewsDir = viewsDir;
+  this.viewsEngine = viewsEngine;
+  this.server = server;
 
-    server.listen(port, function () {
+  /* ==============================
+  *  LISTEN METHOD
+  ============================== */
+  this.listen = function (onReady) {
+    _this.server.listen(port, function () {
       logger.log((0, _info.APP_RUNNING)(name, port));
+      if (onReady) onReady(exoDrawer);
     });
+  };
+
+  /* ==============================
+  *  CLOSE METHOD
+  ============================== */
+  this.close = function () {
+    _this.server.close();
+  };
+
+  /* ==============================
+  *  ATTEND METHOD
+  ============================== */
+  this.attend = function () {
+    if (_this.executionError) return logger.warn((0, _warn.FIX_ERRORS_FIRST)(name));
 
     if (onReady) {
       if (onReady.constructor === Function) {
-        onReady(exoDrawer);
+        _this.listen(onReady);
       } else {
-        executionError = true;
+        _this.executionError = true;
         return logger.error((0, _error.READY_HOOK_NOT_FUNCTION)(name, onReady.constructor.name));
       }
+    } else {
+      _this.listen();
     }
   };
 }
