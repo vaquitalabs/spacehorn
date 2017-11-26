@@ -51,24 +51,6 @@ describe('Spacehorn', () => {
     expect(app.executionError).toBe(false)
   })
 
-  test('Should be able to attend with onReady hook', () => {
-    config.onReady = () => {}
-
-    const app = new Spacehorn(config)
-    app.listen = jest.fn()
-    app.attend()
-    expect(app.listen).toHaveBeenCalled()
-    expect(app.executionError).toBe(false)
-  })
-
-  test('Should have error when onReady hook is not Function', () => {
-    config.onReady = 'not function'
-
-    const app = new Spacehorn(config)
-    app.attend()
-    expect(app.executionError).toBe(true)
-  })
-
   test('Should have error when extendDrawer is not Object', () => {
     const erroredConfig = { ...config, extendDrawer: 'not object' }
     const app = new Spacehorn(erroredConfig)

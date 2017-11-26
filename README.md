@@ -55,7 +55,7 @@ Then you can go to localhost:3000 and see "Hello World" being printed.
 
 ## Spacehorn Configuration
 
-#### publicDir
+### publicDir
 Specify a public directory for your assets.
 ```js
 const Website = new Spacehorn({
@@ -64,7 +64,7 @@ const Website = new Spacehorn({
   ...
 ```
 
-#### viewsDir
+### viewsDir
 Just like publicDir, specify the directory where your views live.
 ```js
 const Website = new Spacehorn({
@@ -73,7 +73,7 @@ const Website = new Spacehorn({
   ...
 ```
 
-#### viewsEngine
+### viewsEngine
 If you specify a `viewsDir`, `viewsEngine` will be required. 
 It must be passed as a String declaring the templates extension. Or, as an Object with `ext` and `engineFunc`.
 
@@ -86,7 +86,7 @@ This is the function handler to manage any custom template engine.
 The `engineFunc` is not required if you are using any of the following engines in [this list.](https://github.com/expressjs/express/wiki?_ga=1.68461073.1262616189.1486618791#template-engines)
 Spacehorn makes use of Express. Any engine that Express supports is ready to be used.
 
-#### routes
+### routes
 This are the routes you want to set for your application passed as an array.
 Each route in format:
 ```js
@@ -107,38 +107,52 @@ If you specify a Database instance, you can access it as well with `drawer.db`.
 In short, you can make use of the different drawer parts like...
 `const { http, method, path, view, params } = drawer;`
 
-#### middleware
+### middleware
 Add middleware to be run before any request to your routes in array format.
+
+For each middleware, it is possible to pass a function or an object specifying the path and function to run.
 ```js
 function isLoggedIn(drawer, req, res, next) {
   // Your logic	
   next()
 }
 
+const verifyIsAdmin = {
+  path: '/admin',
+  run(drawer, req, res, next) {
+    // Your logic
+    next()
+  }
+}
+
 const Website = new Spacehorn({
   name: 'Awesome Website',
   middleware: [
-	isLoggedIn
+	isLoggedIn,
+  verifyIsAdmin
   ],
   ...
 ```
 
-#### db
+### db
 Specify a database instance to be available within the drawer.
 
-#### name
+### name
 The name of the Spacehorn app. Used just for easy tracking of errors. Defaults to "Spacehorn App".
 
-#### port
+### port
 The port where the application will serve. Defaults to 3000.
 
-#### logger
+### logger
 The custom logger to be used. Must handle `.log`, `.error`, `.warn`, `.info`. Defaults to common `console` logger.
 
-#### security
-Any Spacehorn app runs with some standard security rules by default. This can be modified to remove or add specific security features. *CREATING DOCS*
+### httpRequestsLog
+Every HTTP request is showed on the console by default. It can be disabled with `httpRequestsLog: false`.
 
-#### extendDrawer
+### trustProxies
+If your application is behind a proxy, set the trust on the proxy(proxies) in array format. E.g: `trustProxies: ['127.0.0.1', ...]`
+
+### extendDrawer
 If there is anything else you want to have in the drawer for future use on your routes, you can add it in here.
 ```js
 const Website = new Spacehorn({
@@ -161,4 +175,49 @@ On route exec:
   }
 ```
 
-*Documentation still in progress*
+### security
+Any Spacehorn app runs with some standard security rules by default. This can be modified to remove or add specific security features.
+```js
+  security: {
+    cors: true,
+    frameguard: true,
+    ...
+  }
+```
+
+#### cors (Boolean)
+Disabled by default. To enable CORS(Cross-Origin Resource Sharing) just set 'cors: true'
+
+#### contentSecurityPolicy (Boolean)
+Disabled by default. If you want to enable the Content-Security-Policy header set `contentSecurityPolicy: true`
+
+#### dnsPrefetchControl (Boolean)
+Prefetch control is enabled by default. If you want to disable the dns prefetch control set `dnsPrefetchControl: false`
+
+#### frameguard (Boolean)
+Disabled by default. If you want to add the X-Frame-Options header set `frameguard: true`
+
+#### hidePoweredBy (Boolean)
+Enabled by default. If you want the X-Powered-By header set `hidePoweredBy: false`
+
+#### hpkp (Boolean)
+Disabled by default. To set the Public-Key-Pins header add `hpkp: true`
+
+#### hsts (Boolean)
+Disabled by default. To set the Strict-Transport-Security header add `hsts: true`
+
+#### ieNoOpen (Boolean)
+Enabled by default. To disable the X-Download-Options header set `ieNoOpen: false`
+
+#### noCache (Boolean)
+Disabled by default. To enable the `nocache` middleware, set `noCache: true`
+
+#### noSniff (Boolean)
+Enabled by default. To disable the X-Content-Type-Options nosniff header set `noSniff: false`
+
+#### referrerPolicy (Boolean)
+Disabled by default. Set the Referrer-Policy: no-referrer header adding `referrerPolicy: true`
+
+#### xssFilter (Boolean)
+Enabled by default. Disable the X-XSS-Protection header with `xssFilter: false`
+

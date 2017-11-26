@@ -9,6 +9,10 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _morgan = require('morgan');
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
 var _server = require('./server');
 
 var _server2 = _interopRequireDefault(_server);
@@ -16,6 +20,10 @@ var _server2 = _interopRequireDefault(_server);
 var _security = require('./security');
 
 var _security2 = _interopRequireDefault(_security);
+
+var _requestLogger = require('./requestLogger');
+
+var _requestLogger2 = _interopRequireDefault(_requestLogger);
 
 var _applyMiddleware = require('./applyMiddleware');
 
@@ -40,17 +48,18 @@ function Spacehorn(config) {
   var _this = this;
 
   var publicDir = config.publicDir,
-      middleware = config.middleware,
       db = config.db,
       routes = config.routes,
       viewsDir = config.viewsDir,
       viewsEngine = config.viewsEngine,
       extendDrawer = config.extendDrawer,
-      onReady = config.onReady;
+      trustProxies = config.trustProxies,
+      httpRequestsLog = config.httpRequestsLog;
   var name = config.name,
       port = config.port,
       logger = config.logger,
-      security = config.security;
+      security = config.security,
+      middleware = config.middleware;
 
 
   this.executionError = false;
@@ -71,10 +80,14 @@ function Spacehorn(config) {
   if (!logger) logger = console;
 
   /* ==============================
+  *  DEFINE middleware
+  ============================== */
+  if (!middleware) middleware = [];
+
+  /* ==============================
   *  DEFINE initial drawer
   ============================== */
   var exoDrawer = { http: _axios2.default, logger: logger };
-
   if (db) exoDrawer.db = db;
 
   /* ==============================
@@ -101,15 +114,37 @@ function Spacehorn(config) {
   });
 
   /* ==============================
+  *  SET trust proxy IF ANY
+  ============================== */
+  if (trustProxies) {
+    if (trustProxies.constructor.name === 'Array') {
+      trustProxies.each(function (proxy) {
+        server.set('trust proxy', proxy);
+      });
+    } else {
+      this.executionError = true;
+      logger.error((0, _error.TRUST_PROXIES_NOT_ARRAY)(name, trustProxies.constructor.name));
+    }
+  }
+
+  /* ==============================
   *  APPLY Security
   ============================== */
   security = security || {};
   (0, _security2.default)(server, security);
 
   /* ==============================
+  *  SET http requests logging middleware
+  ============================== */
+  if (httpRequestsLog || httpRequestsLog === undefined) {
+    middleware.push(_requestLogger2.default);
+    server.use((0, _morgan2.default)(':status - :response-time ms'));
+  }
+
+  /* ==============================
   *  MIDDLEWARE : if middleware
   ============================== */
-  if (middleware) {
+  if (middleware.length) {
     try {
       (0, _applyMiddleware2.default)(server, exoDrawer, middleware);
     } catch (err) {
@@ -164,18 +199,17 @@ function Spacehorn(config) {
   *  ATTEND METHOD
   ============================== */
   this.attend = function () {
-    if (_this.executionError) return logger.warn((0, _warn.FIX_ERRORS_FIRST)(name));
-
-    if (onReady) {
-      if (onReady.constructor === Function) {
-        _this.listen(onReady);
-      } else {
-        _this.executionError = true;
-        return logger.error((0, _error.READY_HOOK_NOT_FUNCTION)(name, onReady.constructor.name));
+    return new Promise(function (resolve, reject) {
+      if (_this.executionError) {
+        var msg = (0, _warn.FIX_ERRORS_FIRST)(name);
+        logger.error(msg);
+        return reject(msg);
       }
-    } else {
-      _this.listen();
-    }
+      _this.server.listen(port, function () {
+        logger.log((0, _info.APP_RUNNING)(name, port));
+        resolve(exoDrawer);
+      });
+    });
   };
 }
 
