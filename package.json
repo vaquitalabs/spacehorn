@@ -1,6 +1,6 @@
 {
   "name": "spacehorn",
-  "version": "0.0.11",
+  "version": "1.0.0",
   "description": "Node JS framework to build any website or api with total control and without limiting practices",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "babel-eslint": "7.2.3",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
     "babel-preset-es2015": "6.22.0",
-    "coveralls": "^2.13.1",
+    "coveralls": "2.13.1",
     "eslint": "3.19.0",
     "eslint-plugin-import": "2.2.0",
     "jest": "19.0.2"
