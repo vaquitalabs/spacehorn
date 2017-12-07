@@ -4,10 +4,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _morgan = require('morgan');
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
+var _requestLogger = require('./requestLogger');
+
+var _requestLogger2 = _interopRequireDefault(_requestLogger);
+
 var _error = require('./messages/error');
 
-function applyMiddleware(app, drawer, middleware) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function applyMiddleware(app, drawer, middleware, setLogger) {
   if (middleware.constructor === Array) {
+    if (setLogger) {
+      middleware.push(_requestLogger2.default);
+      app.use((0, _morgan2.default)(':status - :response-time ms'));
+    }
+
     var _loop = function _loop(i) {
       var mddw = middleware[i];
       var mddwFunc = mddw.constructor === Object ? mddw.run : mddw;

@@ -9,10 +9,6 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _morgan = require('morgan');
-
-var _morgan2 = _interopRequireDefault(_morgan);
-
 var _server = require('./server');
 
 var _server2 = _interopRequireDefault(_server);
@@ -20,10 +16,6 @@ var _server2 = _interopRequireDefault(_server);
 var _security = require('./security');
 
 var _security2 = _interopRequireDefault(_security);
-
-var _requestLogger = require('./requestLogger');
-
-var _requestLogger2 = _interopRequireDefault(_requestLogger);
 
 var _applyMiddleware = require('./applyMiddleware');
 
@@ -54,12 +46,12 @@ function Spacehorn(config) {
       viewsEngine = config.viewsEngine,
       extendDrawer = config.extendDrawer,
       trustProxies = config.trustProxies,
+      middleware = config.middleware,
       httpRequestsLog = config.httpRequestsLog;
   var name = config.name,
       port = config.port,
       logger = config.logger,
-      security = config.security,
-      middleware = config.middleware;
+      security = config.security;
 
 
   this.executionError = false;
@@ -78,11 +70,6 @@ function Spacehorn(config) {
   *  DEFINE logger
   ============================== */
   if (!logger) logger = console;
-
-  /* ==============================
-  *  DEFINE middleware
-  ============================== */
-  if (!middleware) middleware = [];
 
   /* ==============================
   *  DEFINE initial drawer
@@ -134,19 +121,15 @@ function Spacehorn(config) {
   (0, _security2.default)(server, security);
 
   /* ==============================
-  *  SET http requests logging middleware
-  ============================== */
-  if (httpRequestsLog || httpRequestsLog === undefined) {
-    middleware.push(_requestLogger2.default);
-    server.use((0, _morgan2.default)(':status - :response-time ms'));
-  }
-
-  /* ==============================
   *  MIDDLEWARE : if middleware
+  *  & SET http requests logging middleware
   ============================== */
-  if (middleware.length) {
+
+  if (middleware) {
+    var setLogger = false;
+    if (httpRequestsLog || httpRequestsLog === undefined) setLogger = true;
     try {
-      (0, _applyMiddleware2.default)(server, exoDrawer, middleware);
+      (0, _applyMiddleware2.default)(server, exoDrawer, middleware, setLogger);
     } catch (err) {
       this.executionError = true;
       logger.error(err);
@@ -177,16 +160,6 @@ function Spacehorn(config) {
   this.viewsDir = viewsDir;
   this.viewsEngine = viewsEngine;
   this.server = server;
-
-  /* ==============================
-  *  LISTEN METHOD
-  ============================== */
-  this.listen = function (onReady) {
-    _this.server.listen(port, function () {
-      logger.log((0, _info.APP_RUNNING)(name, port));
-      if (onReady) onReady(exoDrawer);
-    });
-  };
 
   /* ==============================
   *  CLOSE METHOD
