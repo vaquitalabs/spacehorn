@@ -105,7 +105,7 @@ function Spacehorn(config) {
   ============================== */
   if (trustProxies) {
     if (trustProxies.constructor.name === 'Array') {
-      trustProxies.each(function (proxy) {
+      trustProxies.forEach(function (proxy) {
         server.set('trust proxy', proxy);
       });
     } else {
