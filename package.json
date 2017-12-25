@@ -1,6 +1,6 @@
 {
   "name": "spacehorn",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node JS framework to build any website or api with total control and without limiting practices",
   "main": "index.js",
   "scripts": {
