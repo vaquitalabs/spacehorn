@@ -1,8 +1,9 @@
 {
   "name": "spacehorn",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Node JS framework to build any website or api with total control and without limiting practices",
   "main": "index.js",
+  "bin": "./bin/spacehorn.js",
   "scripts": {
     "build": "babel lib -d dist",
     "build:watch": "babel -w lib -d dist",
@@ -30,6 +31,7 @@
     "axios": "0.15.3",
     "body-parser": "1.16.1",
     "chalk": "1.1.3",
+    "commander": "^2.12.2",
     "cors": "2.8.1",
     "express": "4.14.1",
     "helmet": "3.4.0",
