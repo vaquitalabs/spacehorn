@@ -1,3 +1,2 @@
-const Spacehorn = require('./dist/spacehorn');
-
+const Spacehorn = require('./lib/spacehorn');
 module.exports = Spacehorn;
