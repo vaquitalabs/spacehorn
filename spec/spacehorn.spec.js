@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import Spacehorn from './../lib/spacehorn'
+const Spacehorn = require('./../lib/spacehorn')
 
 const config = {
   routes: [{ path: '/path', exec: () => {} }],
@@ -52,26 +52,26 @@ describe('Spacehorn', () => {
   })
 
   test('Should have error when extendDrawer is not Object', () => {
-    const erroredConfig = { ...config, extendDrawer: 'not object' }
+    const erroredConfig = Object.assign({}, config, { extendDrawer: 'not object' })
     const app = new Spacehorn(erroredConfig)
     expect(app.executionError).toBe(true)
   })
 
   test('Should have error when middleware has errors', () => {
-    const erroredConfig = { ...config, middleware: 'should be array' }
+    const erroredConfig = Object.assign({}, config, { middleware: 'should be array' })
     const app = new Spacehorn(erroredConfig)
     expect(app.executionError).toBe(true)
   })
 
   test('Should have error when NO routes', () => {
-    const erroredConfig = { ...config }
+    const erroredConfig = Object.assign({}, config)
     delete erroredConfig.routes
     const app = new Spacehorn(erroredConfig)
     expect(app.executionError).toBe(true)
   })
 
   test('Should have error when routes have errors', () => {
-    const erroredConfig = { ...config, routes: 'should be array' }
+    const erroredConfig = Object.assign({}, config, { routes: 'should be array' })
     const app = new Spacehorn(erroredConfig)
     expect(app.executionError).toBe(true)
   })

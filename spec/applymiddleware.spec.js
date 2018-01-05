@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import applyMiddleware from './../lib/applyMiddleware'
+const applyMiddleware = require('./../lib/applyMiddleware')
 
 const app = {
   appName: 'Test App',
@@ -41,11 +41,11 @@ describe('applyMiddleware', () => {
       () => {},
       {
         path: '/any',
-        run: (req, res, next) => {},
+        run: () => {},
       },
       {
         path: '/any',
-        run: (drawer, req, res, next) => {},
+        run: () => {},
       },
     ]
 

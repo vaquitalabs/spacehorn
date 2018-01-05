@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import manageViews from './../lib/manageViews'
+const manageViews = require('./../lib/manageViews')
 
 const app = {
   appName: 'Test App',

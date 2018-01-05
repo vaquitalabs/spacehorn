@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import requestLogger from './../lib/requestLogger'
+const requestLogger = require('./../lib/requestLogger')
 
 describe('requestLogger', () => {
   test('Should run logger twice with :method, :url & :body', () => {

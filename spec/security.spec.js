@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import securityGuard from './../lib/security'
+const securityGuard = require('./../lib/security')
 
 const app = {
   appName: 'Test App',

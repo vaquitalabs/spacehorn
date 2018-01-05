@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import exoServer from './../lib/server'
+const exoServer = require('./../lib/server')
 
 const appConfig = {
   name: 'Test App',

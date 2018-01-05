@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import router from './../lib/router'
+const router = require('./../lib/router')
 
 const app = {
   appName: 'Test App',
