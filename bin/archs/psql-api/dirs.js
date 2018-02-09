@@ -8,7 +8,7 @@ const dirs = [
   'app/server',
   'config',
   'migrations',
-  'seeders',
+  'seeders'
 ]
 
 module.exports = dirs

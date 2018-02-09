@@ -1,13 +1,15 @@
 {
   "name": "spacehorn",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Node JS framework to build any website or api with total control and without limiting practices",
   "main": "index.js",
   "bin": "./bin/spacehorn.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test:raw": "jest"
+    "lint": "standard lib/**/*.js",
+    "pretest": "npm run lint",
+    "test": "NODE_ENV=test nyc mocha 'lib/**/*.spec.js'",
+    "test:raw": "NODE_ENV=test mocha 'lib/**/*.spec.js'",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -30,7 +32,7 @@
   "homepage": "https://github.com/vaquitalabs/spacehorn#readme",
   "dependencies": {
     "axios": "0.15.3",
-    "body-parser": "1.16.1",
+    "body-parser": "1.18.2",
     "chalk": "1.1.3",
     "commander": "2.12.2",
     "cors": "2.8.1",
@@ -39,17 +41,23 @@
     "morgan": "1.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "7.2.3",
+    "chai": "4.1.2",
+    "chai-http": "3.0.0",
     "coveralls": "2.13.1",
-    "eslint": "3.19.0",
-    "eslint-plugin-import": "2.2.0",
-    "jest": "19.0.2"
+    "mocha": "5.0.0",
+    "nyc": "11.4.1",
+    "sinon": "4.2.2",
+    "standard": "10.0.3"
   },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "/dist/",
-      "/lib/messages/",
-      "/node_modules/"
-    ]
+  "nyc": {
+    "include": [
+      "lib/**/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

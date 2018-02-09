@@ -53,6 +53,31 @@ Awesome Website is serving on port 3000
 
 Then you can go to localhost:3000 and see "Hello World" being printed.
 
+## CLI 
+Spacehorn has some CLI commands to easily create and start a new application.
+
+Install it globally on your system:
+```bash
+$ npm i -g spacehorn
+```
+
+You can:
+```bash
+### Create a new scaffold for an API with PostgreSQL
+spacehorn --arch psql-api
+yarn (or npm install)
+npm start (A ready server will start listening with a demo endpoint "localhost:3000/status")
+
+### Create controllers
+cd app/controllers
+spacehorn -c users (new dir "users" with controller files for all http verbs is created)
+
+spacehorn -c users -n QueryUsers (creates a QueryUsers.js controller inside "users" dir)
+
+spacehorn -c cars -n NewCar (new dir "cars" with a single NewCar.js controller)
+```
+
+
 ## Spacehorn Configuration
 
 ### publicDir

@@ -1,2 +1,2 @@
-const Spacehorn = require('./lib/spacehorn');
-module.exports = Spacehorn;
+const { Spacehorn } = require('./lib')
+module.exports = Spacehorn
