@@ -8,13 +8,13 @@ template += `const {\n`
 template += `  DB_HOST,\n`
 template += `  DB_NAME,\n`
 template += `  DB_USERNAME,\n`
-template += `  DB_PASSWORD,\n`
+template += `  DB_PASSWORD\n`
 template += `} = process.env`
 template += `\n\n`
 template += `const dbModelsReady = {}\n`
 template += `const timestampsConfig = {\n`
 template += `  timestamps: true,\n`
-template += `  underscored: true,\n`
+template += `  underscored: true\n`
 template += `}`
 template += `\n\n`
 template += `const dbUri = \`postgres://\${DB_USERNAME}:\${DB_PASSWORD}@\${DB_HOST}:5432/\${DB_NAME}\`\n`
